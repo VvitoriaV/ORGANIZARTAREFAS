@@ -3,46 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minhas Tarefas</title>
+  <title>TaskDash — Gerenciador de Tarefas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <main class="app">
-    <header class="app__header">
-      <h1 class="app__title">Minhas Tarefas</h1>
-      <p class="app__date" id="dataAtual"></p>
-    </header>
+  <div class="app-layout">
+    <!-- Sidebar / Calendário -->
+    <aside class="sidebar-card">
+      <div class="profile-header">
+        <div class="avatar">TD</div>
+        <div>
+          <h2>Meu Painel</h2>
+          <p id="dataAtual">Carregando data...</p>
+        </div>
+      </div>
 
-    <form class="task-form" id="taskForm">
-      <input
-        type="text"
-        id="taskInput"
-        class="task-form__input"
-        placeholder="O que você precisa fazer?"
-        autocomplete="off"
-        maxlength="80"
-      >
-      <button type="submit" class="task-form__button">Adicionar</button>
-    </form>
+      <!-- Calendário Widget -->
+      <div class="calendar-card">
+        <div class="calendar-header">
+          <button id="prevMonth" class="icon-btn" aria-label="Mês anterior">&lt;</button>
+          <span id="calendarMonthYear" class="calendar-title"></span>
+          <button id="nextMonth" class="icon-btn" aria-label="Próximo mês">&gt;</button>
+        </div>
+        <div class="calendar-weekdays">
+          <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+        </div>
+        <div class="calendar-days" id="calendarDays"></div>
+      </div>
+    </aside>
 
-    <nav class="filters" id="filters">
-      <button class="filters__button is-active" data-filter="todas">Todas</button>
-      <button class="filters__button" data-filter="pendentes">Pendentes</button>
-      <button class="filters__button" data-filter="concluidas">Concluídas</button>
-    </nav>
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      <!-- Cards de Métricas -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-card__title">Total</span>
+          <span class="stat-card__value" id="statTotal">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__title">Pendentes</span>
+          <span class="stat-card__value text-warning" id="statPendentes">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__title">Concluídas</span>
+          <span class="stat-card__value text-success" id="statConcluidas">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__title">Progresso</span>
+          <span class="stat-card__value" id="statProgresso">0%</span>
+        </div>
+      </section>
 
-    <ul class="task-list" id="taskList"></ul>
+      <!-- Formulário de Adição -->
+      <form class="task-form-card" id="taskForm">
+        <div class="input-group">
+          <input
+            type="text"
+            id="taskInput"
+            class="task-input"
+            placeholder="O que você precisa realizar hoje?"
+            autocomplete="off"
+            maxlength="100"
+            required
+          >
+          <input type="date" id="taskDateInput" class="date-input">
+        </div>
+        <button type="submit" class="btn-primary">+ Adicionar Tarefa</button>
+      </form>
 
-    <p class="empty-state" id="emptyState">Nenhuma tarefa por aqui. Adicione a primeira acima.</p>
+      <!-- Filtros e Ações -->
+      <div class="tasks-header">
+        <nav class="filters-nav" id="filters">
+          <button class="filter-btn is-active" data-filter="todas">Todas</button>
+          <button class="filter-btn" data-filter="pendentes">Pendentes</button>
+          <button class="filter-btn" data-filter="concluidas">Concluídas</button>
+        </nav>
+        <button class="btn-text" id="clearCompleted">Limpar concluídas</button>
+      </div>
 
-    <footer class="app__footer">
-      <span id="taskCounter">0 tarefas</span>
-      <button class="app__clear" id="clearCompleted">Limpar concluídas</button>
-    </footer>
-  </main>
+      <!-- Lista de Tarefas -->
+      <ul class="task-list" id="taskList"></ul>
+
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">✨</div>
+        <p>Nenhuma tarefa encontrada neste filtro.</p>
+      </div>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
